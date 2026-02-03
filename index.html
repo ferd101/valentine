@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine 💕</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: radial-gradient(circle at top, #ffe0ec, #ffc0d9);
+        font-family: "Comic Sans MS", "Arial Rounded MT Bold", cursive;
+        text-align: center;
+    }
+
+    /* Floating hearts */
+    .heart {
+        position: absolute;
+        font-size: 24px;
+        animation: floatUp 8s linear infinite;
+        opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+        from {
+            transform: translateY(100vh) scale(1);
+            opacity: 1;
+        }
+        to {
+            transform: translateY(-10vh) scale(1.5);
+            opacity: 0;
+        }
+    }
+
+    .flowers {
+        font-size: 90px;
+        transition: transform 0.4s ease;
+        margin-bottom: 10px;
+    }
+
+    h1 {
+        color: #d63384;
+        margin-bottom: 30px;
+        text-shadow: 1px 1px 2px #fff;
+    }
+
+    .buttons {
+        display: flex;
+        gap: 20px;
+    }
+
+    button {
+        padding: 16px 40px;
+        font-size: 20px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    }
+
+    #yesBtn {
+        background: linear-gradient(135deg, #ff5fa2, #ff85b3);
+        color: white;
+    }
+
+    #noBtn {
+        background: #ffd6e8;
+        color: #b03060;
+    }
+
+    #message {
+        margin-top: 25px;
+        font-size: 22px;
+        color: #8a2d52;
+    }
+
+    /* Hello Kitty */
+    .kitty {
+        width: 160px;
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        animation: bounce 2s infinite ease-in-out;
+    }
+
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-15px); }
+    }
+</style>
+</head>
+
+<body>
+
+<!-- Floating hearts container -->
+<script>
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.textContent = Math.random() > 0.5 ? "💖" : "💗";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = 5 + Math.random() * 5 + "s";
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 8000);
+    }
+
+    setInterval(createHeart, 400);
+</script>
+
+<div class="flowers" id="flowers">🌸🌷🌹🌷🌸</div>
+
+<h1 id="question">Will you be my Valentine? 💕</h1>
+
+<div class="buttons">
+    <button id="yesBtn" onclick="sayYes()">Yes 💖</button>
+    <button id="noBtn" onclick="sayNo()">No 💔</button>
+</div>
+
+<div id="message"></div>
+
+<!-- Hello Kitty image -->
+<img 
+    class="kitty" 
+    src="https://upload.wikimedia.org/wikipedia/en/0/05/Hello_Kitty_character_portrait.png"
+    alt="Hello Kitty"
+/>
+
+<script>
+    let noClicks = 0;
+    const noMessages = [
+        "Are you sure?",
+        "Are you really sure??",
+        "This is getting suspicious 🥺",
+        "My heart can’t take this 💔",
+        "Okay… no more no 😌"
+    ];
+
+    function sayNo() {
+        noClicks++;
+
+        const flowers = document.getElementById("flowers");
+        const yesBtn = document.getElementById("yesBtn");
+        const noBtn = document.getElementById("noBtn");
+        const message = document.getElementById("message");
+
+        flowers.style.transform = `scale(${1 + noClicks * 0.18})`;
+        yesBtn.style.transform = `scale(${1 + noClicks * 0.18})`;
+        noBtn.style.transform = `scale(${1 - noClicks * 0.18})`;
+
+        if (noClicks <= noMessages.length) {
+            message.textContent = noMessages[noClicks - 1];
+        }
+
+        if (noClicks >= 5) {
+            noBtn.style.display = "none";
+            message.textContent = "Only YES is left 💞";
+        }
+    }
+
+    function sayYes() {
+        document.body.innerHTML = `
+            <div style="display:flex;flex-direction:column;align-items:center;">
+                <div style="font-size:130px;">💐💖💐</div>
+                <h1 style="color:#d63384;">YAYYY!!! 🥰</h1>
+                <p style="font-size:24px;color:#8a2d52;">
+                    You just made my Valentine perfect 💘
+                </p>
+                <img 
+                    src="https://upload.wikimedia.org/wikipedia/en/0/05/Hello_Kitty_character_portrait.png"
+                    style="width:180px;margin-top:20px;"
+                />
+            </div>
+        `;
+    }
+</script>
+
+</body>
+</html>
